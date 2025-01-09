@@ -8,8 +8,6 @@ venv/
 env/
 *.env
 
-# Archivos de base de datos
-db.sqlite3
 
 # Archivos estáticos y media generados
 /staticfiles/
