@@ -1,0 +1,117 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+
+<form action="/procesarEdicionReserva/" id="frm_editar_reserva" method="post" class="container mt-5 p-4 ">
+    <h1 class="text-center mb-4">Editar Reserva</h1>
+    {% csrf_token %}
+    <br>
+    <input type="hidden" name="idRes" value="{{reserva.idRes}}">
+    <br>
+
+    <div class="mb-3">
+        <label for="txt_nombre" class="form-label"><b>Nombre del Campista:</b></label>
+        <select name="txt_nombre" id="txt_nombre" class="form-select" required>
+            <option value="" disabled>Seleccione un Campista</option>
+            {% for campista in campista %}
+            <option value="{{ campista.idCam }}">{{ campista.nombreCampista }} </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="txt_fechaReservaI" class="form-label"><b>Fecha de Inicio:</b></label>
+        <input type="date" value="{{reserva.fechaInicio |date:'Y-m-d'}}" class="form-control" name="txt_fechaReservaI" id="txt_fechaReservaI" placeholder="Ingrese la Fecha de Inicio">
+    </div>
+
+    <div class="mb-3">
+        <label for="txt_fechaReservaF" class="form-label"><b>Fecha de Fin:</b></label>
+        <input type="date" value="{{reserva.fechaFinal |date:'Y-m-d'}}" class="form-control" name="txt_fechaReservaF" id="txt_fechaReservaF" placeholder="Ingrese la Fecha de Fin">
+    </div>
+
+    <div class="mb-3">
+        <label for="txt_tipo" class="form-label"><b>Tipo de Alojamiento:</b></label>
+        <select class="form-select" name="txt_tipo" id="txt_tipo">
+            <option value="">---Seleccione---</option>
+            <option value="Tienda" {% if reserva.tipoAlojamiento == "Tienda" %}selected{% endif %}>TIENDA</option>
+            <option value="Cabaña"{% if reserva.tipoAlojamiento == "Cabaña" %}selected{% endif %}>CABAÑA</option>
+            <option value="Caravana"{% if reserva.tipoAlojamiento == "Caravana" %}selected{% endif %}>CARAVANA</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="txt_persona" class="form-label"><b>Número de Personas:</b></label>
+        <input type="number" value="{{reserva.numeroPersona}}" class="form-control" name="txt_persona" id="txt_persona"
+            placeholder="Ingrese el Número de Personas">
+    </div>
+
+    <div class="mb-3">
+        <label for="txt_estado" class="form-label"><b>Estado de Reserva:</b></label>
+        <select class="form-select" name="txt_estado" id="txt_estado">
+            <option value="">---Seleccione---</option>
+            <option value="Confirmado" {% if reserva.estadoReserva == "Confirmado" %}selected{% endif %}>CONFIRMADO</option>
+            <option value="Pendiente" {% if reserva.estadoReserva == "Pendiente" %}selected{% endif %}>PENDIENTE</option>
+            <option value="Cancelado" {% if reserva.estadoReserva == "Cancelado" %}selected{% endif %}>CANCELADO</option>
+        </select>
+        
+    </div>
+
+    <div class="mb-3">
+        <label for="txt_observaciones" class="form-label"><b>Observaciones:</b></label>
+        <textarea class="form-control" name="txt_observaciones" id="txt_observaciones" rows="3"
+            placeholder="Ingrese la Observación">{{reserva.observacionReserva}}</textarea>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary me-3">Guardar</button>
+        <a href="/listadoReserva/" type="reset" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+<script>
+    $("#frm_editar_reserva").validate({
+        rules: {
+            "txt_fechaReservaI": {
+                required: true,
+                date: true
+            },
+            "txt_fechaReservaF": {
+                required: true,
+                date: true,
+            },
+            "txt_tipo": {
+                required: true,
+            },
+            "txt_persona":{
+                required: true,
+            },
+            "txt_estado":{
+                required: true,
+            },
+            "txt_observaciones":{
+                required: true,
+            },
+        },
+        messages: {
+            "txt_fechaReservaI": {
+                required: "Por favor ingrese la Fecha de Inicio",
+            },
+            "txt_fechaReservaF": {
+                required: "Por favor ingrese la Fecha de Fin",
+            },
+            "txt_tipo": {
+                required: "Por favor elija el Tipo de Alojamiento",
+            },
+            "txt_persona":{
+                required: "Por favor ingrese la Cantidad de Personas",
+            },
+            "txt_estado":{
+                required: "Por favor elija el Tipo el Estado",
+            },
+            "txt_observaciones":{
+                required: "Por favor ingrese las Observacines",
+            },
+        },
+    });
+</script>
+
+{% endblock %}

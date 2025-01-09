@@ -1,0 +1,78 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+
+<form action="/procesarEdicionCampista/" id="frm_editar_campista" method="post" class="container mt-5 p-4 ">
+    <h1 class="text-center mb-4">Editar Campista</h1>
+    {% csrf_token %}
+    <br>
+    <input type="hidden" name="idCam" value="{{campista.idCam}}">
+    <br>
+
+    <div class="mb-3">
+        <label for="txt_nombre" class="form-label"><b>Nombre y Apellido:</b></label>
+        <input type="text" value="{{campista.nombreCampista}}" class="form-control" name="txt_nombre" id="txt_nombre" placeholder="Ingrese su Nombre y Apellido">
+    </div>
+
+    <div class="mb-3">
+        <label for="txt_correo" class="form-label"><b>Correo:</b></label>
+        <input type="email" value="{{campista.correoCampista}}" class="form-control" name="txt_correo" id="txt_correo"
+            placeholder="Ingrese el correo electrónico">
+    </div>
+
+    <div class="mb-3">
+        <label for="txt_telefono" class="form-label"><b>Teléfono:</b></label>
+        <input type="number" value="{{campista.telefonoCampista}}" class="form-control" name="txt_telefono" id="txt_telefono"
+            placeholder="Ingrese su Teléfono">
+    </div>
+
+    <div class="mb-3">
+        <label for="txt_direccion" class="form-label"><b>Dirección:</b></label>
+        <textarea class="form-control" name="txt_direccion" id="txt_direccion" rows="3"
+            placeholder="Ingrese la dirección">{{campista.direccionCampista}}</textarea>
+    </div>
+    
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary me-3">Guardar</button>
+        <a href="/listadoCampista/" type="reset" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+<script>
+    $("#frm_editar_campista").validate({
+        rules: {
+            "txt_nombre": {
+                required: true,
+                letras: true
+            },
+            "txt_correo": {
+                required: true,
+                email: true,
+            },
+            "txt_telefono": {
+                required: true,
+                minlength: 10,
+                maxlength: 10,
+            },
+            "txt_direccion":{
+                required: true,
+            },
+        },
+        messages: {
+            "txt_nombre": {
+                required: "Por favor ingrese el Nombre y Apellido",
+            },
+            "txt_correo": {
+                required: "Por favor ingrese el Correo",
+            },
+            "txt_telefono": {
+                required: "Por favor ingrese el Número de Teléfono",
+                minlength: "El Teléfono debe tener al menos 10 dígitos",
+                maxlength: "El Teléfono no puede tener mas de 10 dígitos",
+            },
+            "txt_direccion": {
+                required: "Por favor ingrese la Dirección",
+            },
+        },
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<br>
+<h1 style="text-align: center;">LISTADO DE LOS CAMPISTA</h1>
+<br>
+<div style="margin-left:3%; margin-right: 3%;" class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-warning">
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>CORREO</th>
+                <th>TELEFONO</th>
+                <th>DIRECCION</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        
+        {% for est in campista %}
+        
+            <tr>
+                <td>{{est.idCam}}</td>
+                <td>{{est.nombreCampista}}</td>
+                <td>{{est.correoCampista}}</td>
+                <td>{{est.telefonoCampista}}</td>
+                <td>{{est.direccionCampista}}</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="/editarCampista/{{est.idCam}}" type="button" class="btn btn-outline-primary btn-sm">Editar</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a onclick="return confirm('Estas Seguro');" href="/eliminarCampista/{{est.idCam}}" type="button" class="btn btn-outline-danger btn-sm">Eliminar</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

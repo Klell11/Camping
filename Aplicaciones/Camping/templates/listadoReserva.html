@@ -1,0 +1,44 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<br>
+<h1 style="text-align: center;">LISTADO DE LOS RESERVAS</h1>
+<br>
+<div style="margin-left:3%; margin-right: 3%;" class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-warning">
+            <tr>
+                <th>ID</th>
+                <th>FECHA DE INICIO</th>
+                <th>FECHA DE FIN</th>
+                <th>CAMPISTA</th>
+                <th>TIPO DE ALOJAMIENTO</th>
+                <th>NUMERO DE PERSONAS</th>
+                <th>ESTADO DE RESERVA</th>
+                <th>OBSERVACINES</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        
+        {% for est in reserva %}
+        
+            <tr>
+                <td>{{est.idRes}}</td>
+                <td>{{est.fechaInicio}}</td>
+                <td>{{est.fechaFinal}}</td>
+                <td>{{est.campista.nombreCampista}}</td>
+                <td>{{est.tipoAlojamiento}}</td>
+                <td>{{est.numeroPersona}}</td>
+                <td>{{est.estadoReserva}}</td>
+                <td>{{est.observacionReserva}}</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="/editarReserva/{{est.idRes}}" type="button" class="btn btn-outline-primary btn-sm">Editar</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a onclick="return confirm('Estas Seguro');" href="/eliminarReserva/{{est.idRes}}" type="button" class="btn btn-outline-danger btn-sm">Eliminar</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
